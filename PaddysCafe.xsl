@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:template match="/">
-                <table id="menuTable" class="indent">
+                <table id="CarTable" class="indent">
                     <thead>
                         <tr>
-                            <th colspan="3">Paddy's Cafe Menu</th>
+                            <th colspan="3">Car Models List</th>
                         </tr>
                         <tr>
                             <th>Select</th>
-                            <th>Item</th>
+                            <th>Car List</th>
                             <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <xsl:for-each select="/cafemenu/section">
+                        <xsl:for-each select="/carbrands/section">
                             <tr>
                                 <td colspan="3">
                                     <xsl:value-of select="@name" />
