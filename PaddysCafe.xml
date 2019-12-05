@@ -31,6 +31,10 @@
       <item>Explorer</item>
       <price>32,000</price>
     </entree>
+    <entree>
+      <item>Ford i-10</item>
+      <price>55,000</price>
+    </entree>
   </section>
   <section name="Honda Car">
     <entree>
@@ -46,7 +50,7 @@
       <price>24,450</price>
     </entree>
   </section>
-  <section name="Mercedes-Benz">
+  <section name="Mercedes-Benz Car">
     <entree>
       <item>AMG GT</item>
       <price>19,990</price>
