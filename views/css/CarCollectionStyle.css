@@ -32,11 +32,11 @@ table, th, td {
      border: 1px solid #ced4da;
      padding: 0.5rem;
      text-align: left;
-     font color: white;
+     
 }
  th {
      font-weight: bold;
-     font color: white;
+    
 }
 .selected {
             background-color: #dc3545;
