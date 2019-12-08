@@ -51,24 +51,7 @@ function delete_row(sec, ent)
 };
 
 
-function edit_row(sec, ent)
-{
-	$("#edit").click(function ()
-	{
-		$.ajax(
-		{
-			url: "/post/edit",
-			type: "POST",
-			data:
-			{
-				section: sec,
-				entree: ent
-			},
-			cache: false,
-			success: setTimeout(draw_table, 1000)
-		})
-	})
-};
+
 
 
 

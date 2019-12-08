@@ -101,27 +101,6 @@ router.post('/post/delete', function(req, res) {
 
 // for editing the entries from row
 
-// POST request to add to JSON & XML files
-router.post('/post/edit', function(req, res) {
-
-  // Function to read in a JSON file, add to it & convert to XML
-  function editJSON(obj) {
-    // Function to read in XML file, convert it to JSON, delete the required object and write back to XML file
-    xmlFileToJs('CarCollection.xml', function(err, result) {
-      if (err) throw (err);
-      //This is where we edit the object based on the position of the section and position of the entree, as being passed on from index.html
-      edit result.carbrands.section[obj.section].entree[obj.entree];
-      //This is where we convert from JSON and write back our XML file
-      jsToXmlFile('CarCollection.xml', result, function(err) {
-        if (err) console.log(err);
-      })
-    })
-  }
-
-  // Call appendJSON function and pass in body of the current POST request
-  editJSON(req.body);
-
-});
 
 
 
