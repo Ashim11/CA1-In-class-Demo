@@ -9,6 +9,10 @@
       <item>BMW M5</item>
       <price>75,000</price>
     </entree>
+    <entree>
+      <item>BMW series 10</item>
+      <price>55,000</price>
+    </entree>
   </section>
   <section name="Ford Car">
     <entree>
