@@ -18,5 +18,10 @@ router.get('/get/html', function(req, res) {
     var result = xsltProcess(doc, stylesheet); //Execute Transformation
     res.end(result.toString()); //We render the result back to the user converting it to a string before serving
 });
+var carController = require('../controller/car');
+
+router.route('/api/cars')
+.get(carController.index)
+.post(carController.new);
 
 module.exports = router;
