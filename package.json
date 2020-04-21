@@ -1,0 +1,26 @@
+{
+  "name": "ca1-in-class-demo",
+  "version": "1.0.0",
+  "description": "CA1 in-class demo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashim11/CA1-In-class-Demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashim11/CA1-In-class-Demo/issues"
+  },
+  "homepage": "https://github.com/Ashim11/CA1-In-class-Demo#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "xml2js": "^0.4.23",
+    "xslt-processor": "^0.11.5"
+  },
+  "dependencies": {}
+}
