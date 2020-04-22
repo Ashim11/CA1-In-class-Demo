@@ -1,75 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--  reference code from  https://github.com/mikhail-cct/CA1-In-class-Demo-->
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>IWA Demo App</title>
-	<!-- Bootstrap core CSS -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/CarCollectionStyle.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>IWA Demo App</title>
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/CarCollectionStyle.css" rel="stylesheet">
 </head>
 
 <body>
 
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-		<div class="container">	<a class="navbar-brand" href="#">Top Car Brands</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">	<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Services</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<!-- Page Content -->
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 text-left" style="background-image:url(../img/car.jpg" ;>
-				<h1 style="color:orange;" class="mt-5"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Welcome to Our Top Car Show Room</h1>
-				<p class="lead" style="color:orange;" >Select your car from the list.</p>
-			</div>
-			<div id="results" class="col-lg-8 text-center order-3"></div>
-			<div class="col-lg-4 text-center order-2">
-				<form enctype="application/json" action="/post/json" method="post">
-					<div class="form-group">
-						<select class="form-control" name="sec_n">
-							<option value="0">BMW Car</option>
-							<option value="1">Ford Car</option>
-							<option value="2">Honda Car</option>
-							<option value="3">Mercedes-Benz Car</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<input class="form-control" type="text" name="item" placeholder="Car Model">
-					</div>
-					<div class="form-group">
-						<input class="form-control" type="text" name="price" placeholder="Price">
-					</div>
-					<button type="submit" class="btn btn-primary btn-block">Add Entries</button>
-				</form>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container"> <a class="navbar-brand" href="#">Top Car Brands</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"> <span
+          class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-left" style="background-image:url(../img/car.jpg); background-size:cover;">
+        <h1 style="color:orange;" class="mt-5"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Welcome to
+          Our Top Car Show Room</h1>
+        <p class="lead" style="color:orange;">Select your car from the list.</p>
+      </div>
+      <div class="col-lg-8 mt-3 text-center order-3">
+        <table id="carTable" class="indent">
+          <thead>
+            <tr>
+              <th colspan="3">Car Models List</th>
+            </tr>
+            <tr>
+              <th>NAME</th>
+              <th>TYPE</th>
+              <th>PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-4 mt-3 text-center order-2">
+        <form id="postCarForm" action="/api/cars" method="post">
+          <div class="form-group">
+            <select class="form-control" name="type">
+              <option value="BMW">BMW Car</option>
+              <option value="FORD">Ford Car</option>
+              <option value="HONDA">Honda Car</option>
+              <option value="MERCEDES">Mercedes-Benz Car</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input class="form-control" required type="text" name="name" placeholder="Car Model">
+          </div>
+          <div class="form-group">
+            <input class="form-control" required type="text" title="Only numbers or and .optional" pattern="[0-9]{6}[.]?"" name="price" placeholder="Price">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Add Entries</button>
+        </form>
 
-                    <button id="edit" class="btn btn-block btn-danger">Edit Entries</button>
-                    <button id="delete"  class="btn btn-block btn-danger">Delete</button>
-                    <p class="text-muted">To delete an entree, click the required row first</p>
-			</div>
-		</div>
-	</div>
-	<footer class="footer">
-		<div class="container">	<span class="text-muted">&copy; 2019</span>
-		</div>
-	</footer>
-	<!-- Bootstrap core JavaScript -->
-	<script src="jquery/jquery.min.js"></script>
-	<script src="jquery/table.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+        <button id="edit" class="btn mt-1 btn-block btn-danger">Edit Entries</button>
+        <button id="delete" class="btn btn-block btn-danger">Delete</button>
+        <p class="text-muted">To delete an entree, click the required row first</p>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container"> <span class="text-muted">&copy; 2019</span>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="jquery/jquery.min.js"></script>
+  <script src="jquery/table.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    var table = document.querySelector('#carTable').querySelector('tbody');
+    var form = document.querySelector('#postCarForm');
+    
+    function createRequest(url, method) {
+      var xmlrequest = new XMLHttpRequest();
+      xmlrequest.open(method, url);
+      if (method == "POST") {
+        xmlrequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlrequest.send(urlencodeFormData(new FormData(form)))
+      }
+      else {
+        xmlrequest.send();
+      }
+      return xmlrequest;
+    }
+    function urlencodeFormData(fd){
+      var params = new URLSearchParams();
+      for(var pair of fd.entries()){
+          typeof pair[1]=='string' && params.append(pair[0], pair[1]);
+      }
+      return params.toString();
+  }
+    var response = createRequest("http://localhost:3000/api/cars", "GET");
+    response.onload = function(e) {
+      var body = JSON.parse(response.responseText);
+      if (body.data) {
+        for(var car of body.data) {
+          table.innerHTML+=`<tr><td>${car.name}</td><td>${car.type}</td><td>${car.price}</td></tr>`;
+        }
+      }
+    }
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var response = createRequest("http://localhost:3000/api/cars", "POST");
+      response.onload = function(e) {
+        var body = JSON.parse(this.responseText);
+        if (body.type === "success") {
+          window.location.reload();
+        }
+      }
+    })
+  </script>
 </body>
 
 </html>

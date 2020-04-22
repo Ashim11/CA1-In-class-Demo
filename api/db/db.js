@@ -9,4 +9,4 @@ else {
   console.log('Connected');
 }
 
-module.exports = connection;
+module.exports = mongoose;
