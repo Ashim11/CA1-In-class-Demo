@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/cars', { useNewUrlParser: true});
+
+mongoose.connect('mongodb+srv://root:test123@cluster0-ogrlq.mongodb.net/test?retryWrites=true&w=majority/cars', { useNewUrlParser: true});
 var connection = mongoose.connection;
 
 if (!connection) {
