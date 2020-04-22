@@ -12,7 +12,7 @@ router.route('/api/cars')
 .post(carController.new);
 
 router.route('/api/cars/:carId')
-.put(carController.update)
-.delete(carController.delete);
+.post(carController.update)
+.get(carController.delete);
 
 module.exports = router;

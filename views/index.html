@@ -50,11 +50,21 @@
               <th>NAME</th>
               <th>TYPE</th>
               <th>PRICE</th>
+              <th>ACTION</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
+        <div class="col-lg-8 col-12 mt-3 text-center order-3">
+          <form method="POST" id="carUpdate" style="display:none">
+            <div class="form-group">
+              <label for="updateValueCar">New car name</label>
+              <input name="name" class="form-element" type="text" id="updateValueCar">
+           </div>
+           <button class="btn btn-primary " type="submit">UPDATE</button>
+          </form>
+        </div>
       </div>
       <div class="col-lg-4 mt-3 text-center order-2">
         <form id="postCarForm" action="/api/cars" method="post">
@@ -70,14 +80,10 @@
             <input class="form-control" required type="text" name="name" placeholder="Car Model">
           </div>
           <div class="form-group">
-            <input class="form-control" required type="text" title="Only numbers or and .optional" pattern="[0-9]{6}[.]?"" name="price" placeholder="Price">
+            <input class="form-control" required type="text" title="Only numbers or and .optional" pattern="[0-9]{1-6}[.]?" name="price" placeholder="Price">
           </div>
           <button type="submit" class="btn btn-primary btn-block">Add Entries</button>
         </form>
-
-        <button id="edit" class="btn mt-1 btn-block btn-danger">Edit Entries</button>
-        <button id="delete" class="btn btn-block btn-danger">Delete</button>
-        <p class="text-muted">To delete an entree, click the required row first</p>
       </div>
     </div>
   </div>
@@ -93,34 +99,63 @@
     var table = document.querySelector('#carTable').querySelector('tbody');
     var form = document.querySelector('#postCarForm');
     
-    function createRequest(url, method) {
+    function createRequest(url, method, formData = null) {
       var xmlrequest = new XMLHttpRequest();
       xmlrequest.open(method, url);
       if (method == "POST") {
         xmlrequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlrequest.send(urlencodeFormData(new FormData(form)))
+        if (formData) {
+          //Update car form data
+          xmlrequest.send(urlencodeFormData(new FormData(formData)))
+        }else {
+          //Create car form data
+         xmlrequest.send(urlencodeFormData(new FormData(form)))
+        }
       }
       else {
         xmlrequest.send();
       }
       return xmlrequest;
     }
-    function urlencodeFormData(fd){
+
+    function urlencodeFormData(fd) {
       var params = new URLSearchParams();
       for(var pair of fd.entries()){
           typeof pair[1]=='string' && params.append(pair[0], pair[1]);
       }
       return params.toString();
+    }
+
+    function updateCar(id, event) {
+      event.preventDefault();
+      var updateForm = document.querySelector('#carUpdate');
+      updateForm.style.display ="block";
+      table.style.display = "none";
+
+      updateForm.addEventListener('submit', function(e) {
+       e.preventDefault();
+       var updateReq = createRequest("http://localhost:3000/api/cars/" + id, "POST", updateForm);
+       updateReq.onload = function(e) {
+        var body = JSON.parse(this.responseText);
+        if (body.type == 'success') {
+          window.location.reload();
+        }
+      }
+    });
   }
-    var response = createRequest("http://localhost:3000/api/cars", "GET");
-    response.onload = function(e) {
-      var body = JSON.parse(response.responseText);
-      if (body.data) {
-        for(var car of body.data) {
-          table.innerHTML+=`<tr><td>${car.name}</td><td>${car.type}</td><td>${car.price}</td></tr>`;
+
+    function deleteCar(id, event) {
+      event.preventDefault();
+      var deleteReq = createRequest("http://localhost:3000/api/cars/" + id, "GET");
+      deleteReq.onload = function(e) {
+        var body = JSON.parse(this.responseText);
+        if(body.type =="success") {
+          window.location.reload();
         }
       }
     }
+
+    //create car
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       var response = createRequest("http://localhost:3000/api/cars", "POST");
@@ -130,7 +165,18 @@
           window.location.reload();
         }
       }
-    })
+    });
+
+    //read cars
+    var response = createRequest("http://localhost:3000/api/cars", "GET");
+    response.onload = function(e) {
+      var body = JSON.parse(response.responseText);
+      if (body.data) {
+        for(var car of body.data) {
+          table.innerHTML+=`<tr><td>${car.name}</td><td>${car.type}</td><td>${car.price}</td><td id=${car._id} onClick='deleteCar(this.id,event)'><a class='btn btn-danger' href='#'>DELETE</a></td><td id=${car._id} onClick='updateCar(this.id,event)'><a class='btn btn-info' href='#'>UPDATE</a></td></tr>`;
+        }
+      }
+    }
   </script>
 </body>
 
