@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-
-mongoose.connect('mongodb+srv://root:test123@cluster0-ogrlq.mongodb.net/test?retryWrites=true&w=majority/cars', { useNewUrlParser: true});
+var config = require('dotenv').config()
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-ogrlq.mongodb.net/test?retryWrites=true&w=majority/${process.env.DB_COLLECTION}`, { useNewUrlParser: true});
 var connection = mongoose.connection;
 
 if (!connection) {
